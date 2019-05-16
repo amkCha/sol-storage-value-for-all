@@ -1,5 +1,7 @@
+const BigNumber = require('bignumber.js');
+
 // Paste the deployed address of Store contract here
-let contractAddress = '0xEb00e5B6EEE5528EedF51eA1c90A3627fd8D3c33';
+let contractAddress = '0x1ff9B5a2992Faa97854BE51cD0DA614882728d4e';
 
 function increaseHexByOne(hex) {
  let x = new BigNumber(hex);
@@ -17,51 +19,47 @@ module.exports = async function getGlobalData () {
   //   console.log(`[${index}]` + temp)
   // }
 
-  // index 0 => OK
+  // index 0
   let temp;
   temp = await web3.eth.getStorageAt(contractAddress, 0);
   console.log('storeduint1:' + web3.extend.utils.toDecimal(temp));
 
-  // index 1 => KO
+  // index 1
   // let temp1;
   // temp1 = await web3.eth.getStorageAt(contractAddress, 1);
   // console.log('DEC:' + web3.extend.utils.toDecimal(temp1));
 
     // index 2 & 3 & 4 => OK
-  // let temp2;
-  // temp2 = await web3.eth.getStorageAt(contractAddress, 2);
-  // console.log(temp2);
-  // console.log('DEC:' + web3.extend.utils.toAscii(temp2));
+  let temp2;
+  temp2 = await web3.eth.getStorageAt(contractAddress, 2);
+  console.log('string1:' + web3.extend.utils.toAscii(temp2));
 
-  // let temp3;
-  // temp3 = await web3.eth.getStorageAt(contractAddress, 3);
-  // console.log(temp3);
-  // console.log('DEC:' + web3.extend.utils.toAscii(temp3));
+  let temp3;
+  temp3 = await web3.eth.getStorageAt(contractAddress, 3);
+  console.log('string2:' + web3.extend.utils.toAscii(temp3));
 
-  // let temp4;
-  // temp4 = await web3.eth.getStorageAt(contractAddress, 4);
-  // console.log(temp4);
-  // console.log('DEC:' + web3.extend.utils.toAscii(temp4));
+  let temp4;
+  temp4 = await web3.eth.getStorageAt(contractAddress, 4);
+  console.log('string3:' + web3.extend.utils.toAscii(temp4));
 
-  // index 5 mapping => KO
-  // let key5;
-  // let index5;
+  // index 5, mapping (address => uint)uints1
+  let key5;
+  let index5;
 
-  // key5 = '00000000000000000000000xcB8834509f296d31844534d1548AE8DAF98703c2'
-  // index5 = '0000000000000000000000000000000000000000000000000000000000000005';
+  key5 = '00000000000000000000000xcB8834509f296d31844534d1548AE8DAF98703c2'
+  index5 = '0000000000000000000000000000000000000000000000000000000000000005';
 
-  // key5_low = key5.toLowerCase()
+  key5_low = key5.toLowerCase()
 
-  // let newKeyTest = web3.extend.utils.soliditySha3('0x' + key5_low + index5);
-  // let newKeyTest_2 = increaseHexByOne(newKeyTest);
+  let newKeyTest = web3.extend.utils.soliditySha3('0x' + key5_low + index5);
 
   // let pythonKey = '0xd033d80a79c6deb77c053d3944a2363c9bb549b9df42f92f89428bd03368e83e';
 
-  // temp5 = await web3.eth.getStorageAt(contractAddress, newKeyTest); 
-  // console.log('DEC:' + web3.extend.utils.toDecimal(temp5));
+  temp5 = await web3.eth.getStorageAt(contractAddress, newKeyTest); 
+  console.log('uints1 value:' + web3.extend.utils.toDecimal(temp5));
 
 
-  // index 6 mapping => KO
+  // index 6
   // let temp6;
   // let index6;
   // let key6;
@@ -75,23 +73,27 @@ module.exports = async function getGlobalData () {
   // console.log('DEC:' + web3.extend.utils.toAscii(temp6));
 
 
-  // // index 7 array => OK for 1st item
-  // let temp7;
-  // let index7;
-  // index7 = '0000000000000000000000000000000000000000000000000000000000000007';
+  // index 7, uint[] uintArray
 
-  // newKey7 =  web3.utils.soliditySha3(index7);
-  // let newKey7_2 = increaseHexByOne(newKey7);
-  // temp7 = await web3.eth.getStorageAt(contractAddress, newKey7_2); 
-  // console.log('DEC:' + web3.extend.utils.toDecimal(temp7));
+  let temp7;
+  let index7;
+  let newKey7_2;
+  let temp7_2;
+  index7 = '0000000000000000000000000000000000000000000000000000000000000007';
 
-  // newKey7_2= newKey7 + 1;
-  // temp7_2 = await web3.eth.getStorageAt(contractAddress, newKey7_2); 
-  // console.log('DEC:' + web3.extend.utils.toDecimal(temp7_2));
+  newKey7 =  web3.extend.utils.soliditySha3(index7);
+  newKey7_2 = increaseHexByOne(newKey7);
+
+  temp7 = await web3.eth.getStorageAt(contractAddress, newKey7); 
+  console.log('uintArray first value:' + web3.extend.utils.toDecimal(temp7));
+
+  temp7_2 = await web3.eth.getStorageAt(contractAddress, newKey7_2); 
+  console.log('uintArray second value:' + web3.extend.utils.toDecimal(temp7_2));
 
   // index 9, mapping (uint256 => mapping (address => bool)) mapmap
+  // 0x0 is false
+  // 0x1 is true
 
-  let store;
   let temp9;
   let index9;
   let key9;
@@ -104,5 +106,5 @@ module.exports = async function getGlobalData () {
   let newKey9plus = web3.extend.utils.soliditySha3( '0x' + key9plus.toLowerCase() + newKey99)
 
   temp9 = await web3.eth.getStorageAt(contractAddress, newKey9plus); 
-  console.log('DEC:' + temp9);
+  console.log('mapmap value:' + temp9);
 };
